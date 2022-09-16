@@ -17,6 +17,14 @@ class Accounts(models.Model):
     def save(self, *args, **kwargs):
         password = str(self.password)
         password = password.encode('utf-8')
-        self.password = bcrypt.hashpw(password, bcrypt.gensalt())
+        hashed = bcrypt.hashpw(password, bcrypt.gensalt())
+        self.password = hashed
+
+        # Checking
         # print(self.password)
+        # if bcrypt.checkpw(password, hashed):
+        #     print("match")
+        # else:
+        #     print("does not match")
+
         super(Accounts, self).save(*args, **kwargs)
